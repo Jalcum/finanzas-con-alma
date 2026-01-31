@@ -4,78 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanzas con Alma | Libertad y Abundancia</title>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
-        :root {
-            --alma-oro: #d4af37;
-            --alma-verde: #1e3d1a;
-            --texto: #1e293b;
-        }
-
-        body { 
-            font-family: 'Segoe UI', system-ui, sans-serif; 
-            background: linear-gradient(135deg, #e6d5a7 0%, #fcfaf2 50%, #d4af37 100%);
-            background-attachment: fixed;
-            margin: 0; padding: 20px;
-        }
-
-        .container { 
-            max-width: 1000px; margin: auto; 
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; 
-        }
-
-        .header-alma {
-            grid-column: span 2; background: linear-gradient(135deg, var(--alma-verde), #0a1a08);
-            color: white; padding: 25px; border-radius: 24px; text-align: center;
-            border: 1px solid var(--alma-oro);
-        }
-
-        .card { 
-            background: rgba(255, 255, 255, 0.88); padding: 20px; border-radius: 24px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px); display: flex; flex-direction: column;
-        }
-
-        /* Bloque de Prosperidad (Ingresos) */
-        .card-ingresos {
-            grid-column: span 2; background: rgba(255, 255, 255, 0.95);
-            border: 2px solid var(--alma-oro); text-align: center;
-        }
-
+        :root { --alma-oro: #d4af37; --alma-verde: #1e3d1a; --texto: #1e293b; }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #e6d5a7 0%, #fcfaf2 50%, #d4af37 100%); background-attachment: fixed; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .header-alma { grid-column: span 2; background: linear-gradient(135deg, var(--alma-verde), #0a1a08); color: white; padding: 25px; border-radius: 24px; text-align: center; border: 1px solid var(--alma-oro); }
+        .card { background: rgba(255, 255, 255, 0.88); padding: 20px; border-radius: 24px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); display: flex; flex-direction: column; }
+        .card-ingresos { grid-column: span 2; background: rgba(255, 255, 255, 0.95); border: 2px solid var(--alma-oro); text-align: center; }
         @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .header-alma, .card-ingresos { grid-column: span 1; } }
-
         h3 { color: var(--alma-verde); border-bottom: 1px solid rgba(212, 175, 55, 0.2); margin-top: 0; padding-bottom: 8px; }
-
         input, select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 10px; }
-
-        .btn { 
-            width: 100%; padding: 12px; border: none; border-radius: 12px; 
-            font-weight: bold; cursor: pointer; color: white; display: flex; 
-            align-items: center; justify-content: center; gap: 8px; transition: 0.3s;
-        }
-        
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; text-decoration: none; }
         .btn-add { background: var(--alma-verde); }
-        .btn-wa { background: #25D366; margin-top: 10px; text-decoration: none; }
+        .btn-wa { background: #25D366; margin-top: 10px; }
         .btn-pdf { background: #64748b; }
         .btn-save { background: var(--alma-oro); }
-
         .expense-list { max-height: 120px; overflow-y: auto; margin-top: 10px; }
-        .expense-item { 
-            display: flex; justify-content: space-between; padding: 8px; 
-            background: white; border-radius: 8px; margin-bottom: 5px; border: 1px solid #eee; font-size: 0.85rem;
-        }
-
-        .progress-container { background: #eee; height: 10px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .expense-item { display: flex; justify-content: space-between; padding: 8px; background: white; border-radius: 8px; margin-bottom: 5px; border: 1px solid #eee; font-size: 0.85rem; }
+        .progress-container { background: #eee; height: 12px; border-radius: 10px; margin: 15px 0; overflow: hidden; }
         #fill { background: linear-gradient(90deg, var(--alma-oro), #f1e5ac); height: 100%; width: 0%; transition: 1s; }
-        
-        .recom-item { 
-            display: inline-block; padding: 10px 20px; background: var(--alma-verde); 
-            color: white; border-radius: 50px; text-decoration: none; margin: 5px; font-size: 0.8rem; 
-        }
+        .recom-item { display: inline-block; padding: 10px 20px; background: var(--alma-verde); color: white; border-radius: 50px; text-decoration: none; margin: 5px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -83,31 +34,34 @@
 <div id="app-content" class="container">
     <div class="header-alma">
         <h1 style="margin:0">✨ Finanzas con Alma</h1>
-        <small>Tu herramienta de libertad y abundancia</small>
+        <small>Sembrando prosperidad paso a paso</small>
     </div>
 
     <div class="card" style="text-align: center;">
-        <h3>💰 Saldo Acumulado</h3>
-        <div style="font-size: 2.5rem; font-weight: bold; color: var(--alma-verde);" id="total-txt">$0</div>
+        <h3>🏆 Meta de Libertad</h3>
+        <div style="font-size: 2.2rem; font-weight: bold; color: var(--alma-verde);"><span class="moneda-txt">$</span><span id="total-txt">0</span></div>
         <div class="progress-container"><div id="fill"></div></div>
-        <small id="pct-txt">0% de la meta</small>
+        <small id="pct-txt">0% de tu objetivo final</small>
+        <p style="font-size: 0.8rem; margin-top: 10px;">Faltan: <span class="moneda-txt">$</span><span id="faltante-txt">0</span></p>
         <a id="share-wa" class="btn btn-wa" target="_blank"><i class="fab fa-whatsapp"></i> Compartir Progreso</a>
     </div>
 
     <div class="card">
-        <h3>⚙️ Configuración</h3>
-        <label style="font-size: 0.7rem;">META MENSUAL</label>
-        <input type="number" id="in-meta" oninput="actualizar()">
-        <label style="font-size: 0.7rem;">INGRESO ESTIMADO</label>
-        <input type="number" id="in-ingreso" oninput="actualizar()">
-        <p>Sobrante: <b id="sob-txt">$0</b></p>
+        <h3>⚙️ Mi Configuración</h3>
+        <div style="display: flex; gap: 10px;">
+            <div style="flex:1"><label style="font-size:0.7rem">MONEDA</label><input type="text" id="in-divisa" value="$" oninput="actualizar()"></div>
+            <div style="flex:2"><label style="font-size:0.7rem">OBJETIVO FINAL</label><input type="number" id="in-meta-total" value="5000" oninput="actualizar()"></div>
+        </div>
+        <label style="font-size: 0.7rem;">INGRESO DE ESTE MES</label>
+        <input type="number" id="in-ingreso-mes" value="0" oninput="actualizar()">
+        <p style="text-align:center; margin:0;">Sobrante mes: <b id="sob-txt">0</b></p>
     </div>
 
     <div class="card">
-        <h3>📝 Registrar Movimiento</h3>
+        <h3>📝 Movimientos del Mes</h3>
         <input type="text" id="g-desc" placeholder="Descripción">
         <div style="display: flex; gap: 5px;">
-            <input type="number" id="g-monto" placeholder="$">
+            <input type="number" id="g-monto" placeholder="Monto">
             <select id="g-cat">
                 <option value="🙏 Donación">🙏 Donación</option>
                 <option value="🍎 Nutrición">🍎 Nutrición</option>
@@ -116,62 +70,62 @@
                 <option value="✨ Disfrute">✨ Disfrute</option>
             </select>
         </div>
-        <button class="btn btn-add" onclick="addGasto()">Añadir a mi Vida</button>
+        <button class="btn btn-add" onclick="addGasto()">Registrar Gasto</button>
         <div id="lista" class="expense-list"></div>
     </div>
 
     <div class="card" style="text-align: center;">
-        <h3>📊 Espejo de Flujo</h3>
+        <h3>📊 Distribución del Mes</h3>
         <canvas id="miChart"></canvas>
         <div style="display: flex; gap: 5px; margin-top: 10px;">
-            <button class="btn btn-save" onclick="cerrarMes()" style="flex:1">Cerrar Mes</button>
+            <button class="btn btn-save" onclick="cerrarMes()" style="flex:1">Cerrar y Ahorrar</button>
             <button class="btn btn-pdf" onclick="descargarPDF()" style="flex:1">PDF</button>
-        </div>
-    </div>
-
-    <div class="card card-ingresos">
-        <h3 style="border:none">🌱 Semillas de Prosperidad</h3>
-        <p style="font-size: 0.9rem; margin-top:0;">Recursos recomendados para acelerar tu libertad financiera:</p>
-        <div style="margin-top: 10px;">
-            <a href="https://amzn.to/tu-link-afiliado-1" target="_blank" class="recom-item">📖 Padre Rico Padre Pobre</a>
-            <a href="https://amzn.to/tu-link-afiliado-2" target="_blank" class="recom-item">📖 El Hombre más Rico de Babilonia</a>
-            <a href="#" class="recom-item">🎓 Masterclass Gratis</a>
         </div>
     </div>
 </div>
 
 <script>
-    let ahorroTotal = parseFloat(localStorage.getItem('alma_v5_ahorro')) || 0;
-    let gastosMes = JSON.parse(localStorage.getItem('alma_v5_gastos')) || [];
+    let ahorroAcumulado = parseFloat(localStorage.getItem('alma_final_ahorro')) || 0;
+    let gastosMes = JSON.parse(localStorage.getItem('alma_final_gastos')) || [];
     let chartInstance = null;
 
     window.onload = () => {
-        document.getElementById('in-meta').value = localStorage.getItem('alma_v5_meta') || 1000;
-        document.getElementById('in-ingreso').value = localStorage.getItem('alma_v5_ingreso') || 0;
+        document.getElementById('in-meta-total').value = localStorage.getItem('alma_final_meta') || 5000;
+        document.getElementById('in-ingreso-mes').value = localStorage.getItem('alma_final_ingreso') || 0;
+        document.getElementById('in-divisa').value = localStorage.getItem('alma_final_divisa') || '$';
         actualizar();
         dibujarLista();
     };
 
     function actualizar() {
-        const meta = parseFloat(document.getElementById('in-meta').value) || 1;
-        const ingreso = parseFloat(document.getElementById('in-ingreso').value) || 0;
-        localStorage.setItem('alma_v5_meta', meta);
-        localStorage.setItem('alma_v5_ingreso', ingreso);
+        const metaFinal = parseFloat(document.getElementById('in-meta-total').value) || 1;
+        const ingresoMes = parseFloat(document.getElementById('in-ingreso-mes').value) || 0;
+        const divisa = document.getElementById('in-divisa').value;
+        
+        localStorage.setItem('alma_final_meta', metaFinal);
+        localStorage.setItem('alma_final_ingreso', ingresoMes);
+        localStorage.setItem('alma_final_divisa', divisa);
 
-        const totalGastos = gastosMes.reduce((s, g) => s + g.monto, 0);
-        const sobrante = ingreso - totalGastos;
-        const totalReal = ahorroTotal + sobrante;
+        // Actualizar símbolos de moneda
+        document.querySelectorAll('.moneda-txt').forEach(el => el.innerText = divisa);
 
-        document.getElementById('total-txt').innerText = "$" + Math.floor(totalReal).toLocaleString();
-        document.getElementById('sob-txt').innerText = "$" + sobrante.toLocaleString();
-        document.getElementById('sob-txt').style.color = sobrante < 0 ? "red" : "green";
+        const totalGastosMes = gastosMes.reduce((s, g) => s + g.monto, 0);
+        const sobranteMes = ingresoMes - totalGastosMes;
+        
+        // El ahorro total es lo acumulado de meses pasados + lo que vas ahorrando este mes
+        const progresoActual = ahorroAcumulado + sobranteMes;
 
-        const pct = Math.round((totalReal / meta) * 100);
+        document.getElementById('total-txt').innerText = Math.floor(progresoActual).toLocaleString();
+        document.getElementById('sob-txt').innerText = divisa + " " + sobranteMes.toLocaleString();
+        document.getElementById('sob-txt').style.color = sobranteMes < 0 ? "red" : "green";
+
+        const faltante = metaFinal - progresoActual;
+        document.getElementById('faltante-txt').innerText = Math.max(0, Math.floor(faltante)).toLocaleString();
+
+        const pct = Math.round((progresoActual / metaFinal) * 100);
         document.getElementById('fill').style.width = Math.min(Math.max(pct, 0), 100) + "%";
-        document.getElementById('pct-txt').innerText = pct + "% de la meta alcanzada";
+        document.getElementById('pct-txt').innerText = pct + "% de mi meta de libertad";
 
-        const msj = `✨ Mi abundancia crece: Llevo el ${pct}% de mi meta en Finanzas con Alma.`;
-        document.getElementById('share-wa').href = `https://wa.me/?text=${encodeURIComponent(msj)}`;
         dibujarGrafico();
     }
 
@@ -181,7 +135,7 @@
         const cat = document.getElementById('g-cat').value;
         if (desc && !isNaN(monto)) {
             gastosMes.push({ id: Date.now(), desc, monto, cat });
-            localStorage.setItem('alma_v5_gastos', JSON.stringify(gastosMes));
+            localStorage.setItem('alma_final_gastos', JSON.stringify(gastosMes));
             document.getElementById('g-desc').value = ""; document.getElementById('g-monto').value = "";
             dibujarLista(); actualizar();
         }
@@ -189,16 +143,17 @@
 
     function eliminarGasto(id) {
         gastosMes = gastosMes.filter(g => g.id !== id);
-        localStorage.setItem('alma_v5_gastos', JSON.stringify(gastosMes));
+        localStorage.setItem('alma_final_gastos', JSON.stringify(gastosMes));
         dibujarLista(); actualizar();
     }
 
     function dibujarLista() {
         const listaDiv = document.getElementById('lista');
+        const divisa = localStorage.getItem('alma_final_divisa') || '$';
         listaDiv.innerHTML = gastosMes.map(g => `
             <div class="expense-item">
-                <span><b>${g.desc}</b> (${g.cat})</span>
-                <span>-$${g.monto} <button style="color:red; border:none; background:none; cursor:pointer" onclick="eliminarGasto(${g.id})">×</button></span>
+                <span><b>${g.desc}</b></span>
+                <span>-${divisa}${g.monto} <button style="color:red; border:none; background:none; cursor:pointer" onclick="eliminarGasto(${g.id})">×</button></span>
             </div>
         `).join('');
     }
@@ -220,12 +175,16 @@
     }
 
     function cerrarMes() {
-        if (!confirm("¿Cerrar ciclo mensual?")) return;
+        const ingreso = parseFloat(document.getElementById('in-ingreso-mes').value) || 0;
         const totalG = gastosMes.reduce((s, g) => s + g.monto, 0);
-        const ingreso = parseFloat(document.getElementById('in-ingreso').value) || 0;
-        ahorroTotal += (ingreso - totalG);
-        localStorage.setItem('alma_v5_ahorro', ahorroTotal);
-        localStorage.removeItem('alma_v5_gastos');
+        const ahorroDeEsteMes = ingreso - totalG;
+
+        if (!confirm(`¿Cerrar mes? Se sumarán ${ahorroDeEsteMes.toLocaleString()} a tu ahorro acumulado.`)) return;
+        
+        ahorroAcumulado += ahorroDeEsteMes;
+        localStorage.setItem('alma_final_ahorro', ahorroAcumulado);
+        localStorage.removeItem('alma_final_gastos');
+        gastosMes = [];
         location.reload();
     }
 
@@ -233,7 +192,7 @@
         const element = document.getElementById('app-content');
         const botones = document.querySelectorAll('button, .btn-wa');
         botones.forEach(b => b.style.visibility = 'hidden');
-        html2pdf().from(element).save('Finanzas_Con_Alma.pdf').then(() => {
+        html2pdf().from(element).save('Mi_Plan_De_Vida.pdf').then(() => {
             botones.forEach(b => b.style.visibility = 'visible');
         });
     }
