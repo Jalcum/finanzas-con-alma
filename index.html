@@ -27,7 +27,11 @@
         .expense-item { display: flex; justify-content: space-between; padding: 8px; background: white; border-radius: 8px; margin-bottom: 5px; border: 1px solid #eee; font-size: 0.85rem; }
         .progress-container { background: #eee; height: 12px; border-radius: 10px; margin: 15px 0; overflow: hidden; }
         #fill { background: linear-gradient(90deg, var(--alma-oro), #f1e5ac); height: 100%; width: 0%; transition: 1s; }
-        .recom-item { display: inline-block; padding: 10px 20px; background: var(--alma-verde); color: white; border-radius: 50px; text-decoration: none; margin: 5px; font-size: 0.8rem; }
+        .recom-item { display: inline-block; padding: 10px 20px; background: var(--alma-verde); color: white; border-radius: 50px; text-decoration: none; margin: 5px; font-size: 0.8rem; transition: 0.3s; }
+        .recom-item:hover { background: var(--alma-oro); transform: translateY(-2px); }
+        
+        /* Estilos Calculadora Extra */
+        #resultado-calc { margin-top: 15px; padding: 10px; border-radius: 10px; background: #f0fdf4; color: #166534; font-weight: bold; font-size: 0.9rem; display: none; }
     </style>
 </head>
 <body>
@@ -45,6 +49,16 @@
         <small id="pct-txt">0% de tu objetivo</small>
         <p style="font-size: 0.8rem; margin-top: 10px;">Faltan: <span class="moneda-txt">$</span><span id="faltante-txt">0</span></p>
         <a id="share-wa" class="btn btn-wa" target="_blank"><i class="fab fa-whatsapp"></i> Compartir Progreso</a>
+    </div>
+
+    <div class="card">
+        <h3>⏳ Proyectar mi Sueño</h3>
+        <label style="font-size: 0.6rem;">¿CUÁNTO QUIERES REUNIR?</label>
+        <input type="number" id="calc-meta" placeholder="Ej: 10000">
+        <label style="font-size: 0.6rem;">AHORRO MENSUAL POSIBLE</label>
+        <input type="number" id="calc-mensual" placeholder="Ej: 500">
+        <button class="btn btn-add" onclick="proyectarTiempo()"><i class="fas fa-magic"></i> Calcular Tiempo</button>
+        <div id="resultado-calc"></div>
     </div>
 
     <div class="card">
@@ -91,11 +105,11 @@
 
     <div class="card card-ingresos">
         <h3 style="border:none">🌱 Semillas de Prosperidad</h3>
-        <p style="font-size: 0.9rem; margin-top:0;">Recursos recomendados para tu crecimiento:</p>
+        <p style="font-size: 0.9rem; margin-top:0;">Recursos recomendados para tu crecimiento (Disponibles en Buscalibre):</p>
         <div style="margin-top: 10px;">
-            <a href="#" target="_blank" class="recom-item">📖 Padre Rico Padre Pobre</a>
-            <a href="#" target="_blank" class="recom-item">📖 El Hombre más Rico de Babilonia</a>
-            <a href="#" target="_blank" class="recom-item">🎓 Masterclass Abundancia</a>
+            <a href="https://www.bookdelivery.com/int-es/libro/padre-rico-padre-pobre/9781612680194" target="_blank" class="recom-item"><i class="fas fa-book"></i> Padre Rico Padre Pobre</a>
+            <a href="https://www.bookdelivery.com/int-es/libro/el-hombre-mas-rico-de-babilonia/9788477203100" target="_blank" class="recom-item"><i class="fas fa-book"></i> El Hombre más Rico de Babilonia</a>
+            <a href="#" target="_blank" class="recom-item"><i class="fas fa-graduation-cap"></i> Masterclass Abundancia</a>
         </div>
     </div>
 </div>
@@ -112,6 +126,23 @@
         actualizar();
         dibujarLista();
     };
+
+    // Función de la Calculadora Nueva
+    function proyectarTiempo() {
+        const meta = parseFloat(document.getElementById('calc-meta').value);
+        const mensual = parseFloat(document.getElementById('calc-mensual').value);
+        const divisa = document.getElementById('in-divisa').value;
+        const resDiv = document.getElementById('resultado-calc');
+
+        if (meta > 0 && mensual > 0) {
+            const meses = Math.ceil(meta / mensual);
+            const años = (meses / 12).toFixed(1);
+            resDiv.style.display = 'block';
+            resDiv.innerHTML = `✨ Lograrás los ${divisa}${meta.toLocaleString()} en aproximadamente ${meses} meses (${años} años). ¡Sigue sembrando!`;
+        } else {
+            alert("Por favor, ingresa montos válidos para proyectar.");
+        }
+    }
 
     function actualizar() {
         const metaFinal = parseFloat(document.getElementById('in-meta-total').value) || 1;
@@ -196,9 +227,9 @@
 
     function descargarPDF() {
         const element = document.getElementById('app-content');
-        const botones = document.querySelectorAll('button, .btn-wa');
+        const botones = document.querySelectorAll('button, .btn-wa, .btn-backup');
         botones.forEach(b => b.style.visibility = 'hidden');
-        html2pdf().from(element).save('Finanzas_Alma.pdf').then(() => {
+        html2pdf().from(element).save('Mi_Progreso_Alma.pdf').then(() => {
             botones.forEach(b => b.style.visibility = 'visible');
         });
     }
