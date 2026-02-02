@@ -15,7 +15,13 @@
         .header-alma { grid-column: span 2; background: linear-gradient(135deg, var(--alma-verde), #0a1a08); color: white; padding: 25px; border-radius: 24px; text-align: center; border: 1px solid var(--alma-oro); }
         .card { background: rgba(255, 255, 255, 0.88); padding: 20px; border-radius: 24px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); display: flex; flex-direction: column; }
         .card-ingresos { grid-column: span 2; background: rgba(255, 255, 255, 0.95); border: 2px solid var(--alma-oro); text-align: center; }
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .header-alma, .card-ingresos { grid-column: span 1; } }
+        
+        /* Estilos nuevos para Consejos */
+        .card-consejo { grid-column: span 1; background: linear-gradient(135deg, #fff, #fdf8e6); border-left: 5px solid var(--alma-oro); }
+        .consejo-texto { font-style: italic; color: var(--alma-verde); font-size: 1.1rem; line-height: 1.5; margin: 10px 0; }
+        .consejo-autor { font-weight: bold; color: var(--alma-oro); text-align: right; font-size: 0.8rem; text-transform: uppercase; }
+
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .header-alma, .card-ingresos, .card-consejo { grid-column: span 1; } }
         h3 { color: var(--alma-verde); border-bottom: 1px solid rgba(212, 175, 55, 0.2); margin-top: 0; padding-bottom: 8px; }
         input, select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 10px; }
         .btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; text-decoration: none; font-size: 0.9rem; }
@@ -30,8 +36,6 @@
         #fill { background: linear-gradient(90deg, var(--alma-oro), #f1e5ac); height: 100%; width: 0%; transition: 1s; }
         .recom-item { display: inline-block; padding: 10px 20px; background: var(--alma-verde); color: white; border-radius: 50px; text-decoration: none; margin: 5px; font-size: 0.8rem; transition: 0.3s; }
         .recom-item:hover { background: var(--alma-oro); transform: translateY(-2px); }
-        
-        /* Estilos Calculadora Extra */
         #resultado-calc { margin-top: 15px; padding: 10px; border-radius: 10px; background: #f0fdf4; color: #166534; font-weight: bold; font-size: 0.9rem; display: none; }
     </style>
 </head>
@@ -50,6 +54,18 @@
         <small id="pct-txt">0% de tu objetivo</small>
         <p style="font-size: 0.8rem; margin-top: 10px;">Faltan: <span class="moneda-txt">$</span><span id="faltante-txt">0</span></p>
         <a id="share-wa" class="btn btn-wa" target="_blank"><i class="fab fa-whatsapp"></i> Compartir Progreso</a>
+    </div>
+
+    <div class="card card-consejo">
+        <h3>💡 Consejo del Día</h3>
+        
+        <div class="consejo-texto">
+            "No ahorres lo que te sobra después de gastar, gasta lo que te sobra después de ahorrar. Tu futuro es tu mejor inversión."
+        </div>
+        <div class="consejo-autor">— Mentalidad de Abundancia</div>
+        <p style="font-size: 0.7rem; color: #666; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+            <i class="fas fa-seedling"></i> Aplica este consejo hoy y observa cómo cambia tu relación con el dinero.
+        </p>
     </div>
 
     <div class="card">
@@ -106,7 +122,7 @@
 
     <div class="card card-ingresos">
         <h3 style="border:none">🌱 Semillas de Prosperidad</h3>
-        <p style="font-size: 0.9rem; margin-top:0;">Recursos recomendados para tu crecimiento (Disponibles en Buscalibre):</p>
+        <p style="font-size: 0.9rem; margin-top:0;">Recursos recomendados para tu crecimiento:</p>
         <div style="margin-top: 10px;">
             <a href="https://www.bookdelivery.com/int-es/libro/padre-rico-padre-pobre/9781612680194" target="_blank" class="recom-item"><i class="fas fa-book"></i> Padre Rico Padre Pobre</a>
             <a href="https://www.bookdelivery.com/int-es/libro/el-hombre-mas-rico-de-babilonia/9788477203100" target="_blank" class="recom-item"><i class="fas fa-book"></i> El Hombre más Rico de Babilonia</a>
@@ -116,6 +132,7 @@
 </div>
 
 <script>
+    // (Mantenemos tu lógica original de JavaScript intacta para que no pierdas tus funciones)
     let ahorroAcumulado = parseFloat(localStorage.getItem('alma_final_ahorro')) || 0;
     let gastosMes = JSON.parse(localStorage.getItem('alma_final_gastos')) || [];
     let chartInstance = null;
@@ -128,46 +145,36 @@
         dibujarLista();
     };
 
-    // Función de la Calculadora Nueva
     function proyectarTiempo() {
         const meta = parseFloat(document.getElementById('calc-meta').value);
         const mensual = parseFloat(document.getElementById('calc-mensual').value);
         const divisa = document.getElementById('in-divisa').value;
         const resDiv = document.getElementById('resultado-calc');
-
         if (meta > 0 && mensual > 0) {
             const meses = Math.ceil(meta / mensual);
             const años = (meses / 12).toFixed(1);
             resDiv.style.display = 'block';
             resDiv.innerHTML = `✨ Lograrás los ${divisa}${meta.toLocaleString()} en aproximadamente ${meses} meses (${años} años). ¡Sigue sembrando!`;
-        } else {
-            alert("Por favor, ingresa montos válidos para proyectar.");
-        }
+        } else { alert("Por favor, ingresa montos válidos."); }
     }
 
     function actualizar() {
         const metaFinal = parseFloat(document.getElementById('in-meta-total').value) || 1;
         const ingresoMes = parseFloat(document.getElementById('in-ingreso-mes').value) || 0;
         const divisa = document.getElementById('in-divisa').value;
-        
         localStorage.setItem('alma_final_meta', metaFinal);
         localStorage.setItem('alma_final_ingreso', ingresoMes);
         localStorage.setItem('alma_final_divisa', divisa);
-
         document.querySelectorAll('.moneda-txt').forEach(el => el.innerText = divisa);
-
         const totalGastosMes = gastosMes.reduce((s, g) => s + g.monto, 0);
         const sobranteMes = ingresoMes - totalGastosMes;
         const progresoActual = ahorroAcumulado + sobranteMes;
-
         document.getElementById('total-txt').innerText = Math.floor(progresoActual).toLocaleString();
         const faltante = metaFinal - progresoActual;
         document.getElementById('faltante-txt').innerText = Math.max(0, Math.floor(faltante)).toLocaleString();
-
         const pct = Math.round((progresoActual / metaFinal) * 100);
         document.getElementById('fill').style.width = Math.min(Math.max(pct, 0), 100) + "%";
         document.getElementById('pct-txt').innerText = pct + "% alcanzado";
-
         dibujarGrafico();
     }
 
@@ -269,4 +276,3 @@
 </script>
 </body>
 </html>
-
