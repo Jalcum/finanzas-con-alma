@@ -3,279 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="p:domain_verify" content="43bdfe263680e7640ada35852f10045c"/>
-    <title>Finanzas con Alma | Libertad y Abundancia</title>
+    <title>Finanzas con Alma | Control de Abundancia</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --alma-oro: #d4af37; --alma-verde: #1e3d1a; --texto: #1e293b; }
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #e6d5a7 0%, #fcfaf2 50%, #d4af37 100%); background-attachment: fixed; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .header-alma { grid-column: span 2; background: linear-gradient(135deg, var(--alma-verde), #0a1a08); color: white; padding: 25px; border-radius: 24px; text-align: center; border: 1px solid var(--alma-oro); }
-        .card { background: rgba(255, 255, 255, 0.88); padding: 20px; border-radius: 24px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); border: 1px solid rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); display: flex; flex-direction: column; }
-        .card-ingresos { grid-column: span 2; background: rgba(255, 255, 255, 0.95); border: 2px solid var(--alma-oro); text-align: center; }
+        :root { --alma-oro: #d4af37; --alma-verde: #1e3d1a; --texto: #1e293b; --rojo: #ef4444; --verde-claro: #22c55e; }
+        body { font-family: 'Segoe UI', sans-serif; background: #fcfaf2; margin: 0; padding: 0; color: var(--texto); }
         
-        /* Estilos nuevos para Consejos */
-        .card-consejo { grid-column: span 1; background: linear-gradient(135deg, #fff, #fdf8e6); border-left: 5px solid var(--alma-oro); }
-        .consejo-texto { font-style: italic; color: var(--alma-verde); font-size: 1.1rem; line-height: 1.5; margin: 10px 0; }
-        .consejo-autor { font-weight: bold; color: var(--alma-oro); text-align: right; font-size: 0.8rem; text-transform: uppercase; }
+        /* LANDING PAGE */
+        .hero { background: linear-gradient(135deg, var(--alma-verde), #0a1a08); color: white; padding: 50px 20px; text-align: center; border-bottom: 5px solid var(--alma-oro); }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; color: var(--alma-oro); }
+        
+        .sales-container { max-width: 800px; margin: -30px auto 40px; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; border: 1px solid var(--alma-oro); }
+        .btn-buy { background: #e67e22; color: white; padding: 18px 35px; border-radius: 50px; text-decoration: none; font-size: 1.3rem; font-weight: bold; display: inline-block; transition: 0.3s; box-shadow: 0 4px 15px rgba(230,126,34,0.4); }
+        .btn-buy:hover { transform: scale(1.05); }
 
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .header-alma, .card-ingresos, .card-consejo { grid-column: span 1; } }
-        h3 { color: var(--alma-verde); border-bottom: 1px solid rgba(212, 175, 55, 0.2); margin-top: 0; padding-bottom: 8px; }
-        input, select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 10px; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; text-decoration: none; font-size: 0.9rem; }
-        .btn-add { background: var(--alma-verde); }
-        .btn-wa { background: #25D366; margin-top: 10px; }
-        .btn-pdf { background: #64748b; }
-        .btn-save { background: var(--alma-oro); }
-        .btn-backup { background: #34495e; font-size: 0.75rem; padding: 8px; margin-top: 5px; }
-        .expense-list { max-height: 120px; overflow-y: auto; margin-top: 10px; }
-        .expense-item { display: flex; justify-content: space-between; padding: 8px; background: white; border-radius: 8px; margin-bottom: 5px; border: 1px solid #eee; font-size: 0.85rem; }
-        .progress-container { background: #eee; height: 12px; border-radius: 10px; margin: 15px 0; overflow: hidden; }
-        #fill { background: linear-gradient(90deg, var(--alma-oro), #f1e5ac); height: 100%; width: 0%; transition: 1s; }
-        .recom-item { display: inline-block; padding: 10px 20px; background: var(--alma-verde); color: white; border-radius: 50px; text-decoration: none; margin: 5px; font-size: 0.8rem; transition: 0.3s; }
-        .recom-item:hover { background: var(--alma-oro); transform: translateY(-2px); }
-        #resultado-calc { margin-top: 15px; padding: 10px; border-radius: 10px; background: #f0fdf4; color: #166534; font-weight: bold; font-size: 0.9rem; display: none; }
+        /* APP SECTION */
+        .app-section { max-width: 1100px; margin: 20px auto; padding: 20px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .full-width { grid-column: span 2; }
+
+        /* FILTROS */
+        .filter-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .btn-filter { padding: 8px 15px; border: 1px solid var(--alma-oro); background: white; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+        .btn-filter.active { background: var(--alma-oro); color: white; }
+
+        /* FORMULARIOS */
+        .form-group { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; margin-bottom: 15px; }
+        input, select { padding: 10px; border: 1px solid #ddd; border-radius: 10px; outline: none; }
+        .btn-add { background: var(--alma-verde); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+        
+        /* TABLAS Y LISTAS */
+        .list-container { max-height: 250px; overflow-y: auto; margin-top: 10px; }
+        .item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .item.ingreso { border-left: 4px solid var(--verde-claro); }
+        .item.gasto { border-left: 4px solid var(--rojo); }
+
+        @media (max-width: 768px) { .app-section { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .form-group { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<div id="app-content" class="container">
-    <div class="header-alma">
-        <h1 style="margin:0">✨ Finanzas con Alma</h1>
-        <small>Sembrando hoy tu libertad de mañana</small>
+    <header class="hero">
+        <h1>✨ Finanzas con Alma</h1>
+        <p>Tu herramienta diaria para una vida de abundancia</p>
+    </header>
+
+    <div class="sales-container">
+        <h3>Descarga la Guía PDF Completa</h3>
+        <p>Aprende el sistema exacto para multiplicar tus ahorros</p>
+        <div style="font-size: 1.8rem; font-weight: bold; margin: 15px 0;">$9.99 <small style="text-decoration: line-through; color: #999; font-size: 1rem;">$27</small></div>
+        <a href="TU_ENLACE_DE_PAGO_AQUÍ" class="btn-buy">¡OBTENER GUÍA PDF!</a>
     </div>
 
-    <div class="card" style="text-align: center;">
-        <h3>🏆 Meta de Libertad</h3>
-        <div style="font-size: 2.2rem; font-weight: bold; color: var(--alma-verde);"><span class="moneda-txt">$</span><span id="total-txt">0</span></div>
-        <div class="progress-container"><div id="fill"></div></div>
-        <small id="pct-txt">0% de tu objetivo</small>
-        <p style="font-size: 0.8rem; margin-top: 10px;">Faltan: <span class="moneda-txt">$</span><span id="faltante-txt">0</span></p>
-        <a id="share-wa" class="btn btn-wa" target="_blank"><i class="fab fa-whatsapp"></i> Compartir Progreso</a>
-    </div>
-
-    <div class="card card-consejo">
-        <h3>💡 Consejo del Día</h3>
+    <div class="app-section">
         
-        <div class="consejo-texto">
-             "Antes de comprar algo, pregúntate: ¿esto me acerca a mi meta o me aleja de mi paz?"
-        </div>
-        <div class="consejo-autor">— Consciencia Financiera</div>
-        <p style="font-size: 0.7rem; color: #666; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
-            <i class="fas fa-seedling"></i> Aplica este consejo hoy y observa cómo cambia tu relación con el dinero.
-        </p>
-    </div>
-
-    <div class="card">
-        <h3>⏳ Proyectar mi Sueño</h3>
-        <label style="font-size: 0.6rem;">¿CUÁNTO QUIERES REUNIR?</label>
-        <input type="number" id="calc-meta" placeholder="Ej: 10000">
-        <label style="font-size: 0.6rem;">AHORRO MENSUAL POSIBLE</label>
-        <input type="number" id="calc-mensual" placeholder="Ej: 500">
-        <button class="btn btn-add" onclick="proyectarTiempo()"><i class="fas fa-magic"></i> Calcular Tiempo</button>
-        <div id="resultado-calc"></div>
-    </div>
-
-    <div class="card">
-        <h3>Avance de Meta</h3>
-        <div style="display: flex; gap: 10px;">
-            <div style="flex:1"><label style="font-size:0.6rem">MONEDA</label><input type="text" id="in-divisa" value="$" oninput="actualizar()"></div>
-            <div style="flex:2"><label style="font-size:0.6rem">OBJETIVO FINAL</label><input type="number" id="in-meta-total" value="5000" oninput="actualizar()"></div>
-        </div>
-        <label style="font-size: 0.6rem;">INGRESO ESTE MES</label>
-        <input type="number" id="in-ingreso-mes" value="0" oninput="actualizar()">
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px;">
-            <button class="btn btn-backup" onclick="exportarDatos()"><i class="fas fa-download"></i> Respaldar</button>
-            <button class="btn btn-backup" onclick="document.getElementById('fileInput').click()"><i class="fas fa-upload"></i> Cargar</button>
-            <input type="file" id="fileInput" style="display:none" onchange="importarDatos(event)">
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>📝 Movimientos</h3>
-        <input type="text" id="g-desc" placeholder="Descripción">
-        <div style="display: flex; gap: 5px;">
-            <input type="number" id="g-monto" placeholder="Monto">
-            <select id="g-cat">
-                <option value="🙏 Donación">🙏 Donación</option>
-                <option value="🍎 Nutrición">🍎 Nutrición</option>
-                <option value="🏠 Hogar">🏠 Hogar</option>
-                <option value="🚗 Movilidad">🚗 Movilidad</option>
-                <option value="✨ Disfrute">✨ Disfrute</option>
-            </select>
-        </div>
-        <button class="btn btn-add" onclick="addGasto()">Añadir Movimiento</button>
-        <div id="lista" class="expense-list"></div>
-    </div>
-
-    <div class="card" style="text-align: center;">
-        <h3>📊 Distribución</h3>
-        <canvas id="miChart"></canvas>
-        <div style="display: flex; gap: 5px; margin-top: 10px;">
-            <button class="btn btn-save" onclick="cerrarMes()" style="flex:1">Cerrar Mes</button>
-            <button class="btn btn-pdf" onclick="descargarPDF()" style="flex:1">PDF</button>
-        </div>
-    </div>
-
-    <div class="card card-ingresos">
-        <h3 style="border:none">🌱 Semillas de Prosperidad</h3>
-        <p style="font-size: 0.9rem; margin-top:0;">Recursos recomendados para tu crecimiento:</p>
-        <div style="margin-top: 10px;">
-            <a href="https://www.bookdelivery.com/int-es/libro/padre-rico-padre-pobre/9781612680194" target="_blank" class="recom-item"><i class="fas fa-book"></i> Padre Rico Padre Pobre</a>
-            <a href="https://www.bookdelivery.com/int-es/libro/el-hombre-mas-rico-de-babilonia/9788477203100" target="_blank" class="recom-item"><i class="fas fa-book"></i> El Hombre más Rico de Babilonia</a>
-            <a href="#" target="_blank" class="recom-item"><i class="fas fa-graduation-cap"></i> Masterclass Abundancia</a>
-        </div>
-    </div>
-</div>
-
-<script>
-    // (Mantenemos tu lógica original de JavaScript intacta para que no pierdas tus funciones)
-    let ahorroAcumulado = parseFloat(localStorage.getItem('alma_final_ahorro')) || 0;
-    let gastosMes = JSON.parse(localStorage.getItem('alma_final_gastos')) || [];
-    let chartInstance = null;
-
-    window.onload = () => {
-        document.getElementById('in-meta-total').value = localStorage.getItem('alma_final_meta') || 5000;
-        document.getElementById('in-ingreso-mes').value = localStorage.getItem('alma_final_ingreso') || 0;
-        document.getElementById('in-divisa').value = localStorage.getItem('alma_final_divisa') || '$';
-        actualizar();
-        dibujarLista();
-    };
-
-    function proyectarTiempo() {
-        const meta = parseFloat(document.getElementById('calc-meta').value);
-        const mensual = parseFloat(document.getElementById('calc-mensual').value);
-        const divisa = document.getElementById('in-divisa').value;
-        const resDiv = document.getElementById('resultado-calc');
-        if (meta > 0 && mensual > 0) {
-            const meses = Math.ceil(meta / mensual);
-            const años = (meses / 12).toFixed(1);
-            resDiv.style.display = 'block';
-            resDiv.innerHTML = `✨ Lograrás los ${divisa}${meta.toLocaleString()} en aproximadamente ${meses} meses (${años} años). ¡Sigue sembrando!`;
-        } else { alert("Por favor, ingresa montos válidos."); }
-    }
-
-    function actualizar() {
-        const metaFinal = parseFloat(document.getElementById('in-meta-total').value) || 1;
-        const ingresoMes = parseFloat(document.getElementById('in-ingreso-mes').value) || 0;
-        const divisa = document.getElementById('in-divisa').value;
-        localStorage.setItem('alma_final_meta', metaFinal);
-        localStorage.setItem('alma_final_ingreso', ingresoMes);
-        localStorage.setItem('alma_final_divisa', divisa);
-        document.querySelectorAll('.moneda-txt').forEach(el => el.innerText = divisa);
-        const totalGastosMes = gastosMes.reduce((s, g) => s + g.monto, 0);
-        const sobranteMes = ingresoMes - totalGastosMes;
-        const progresoActual = ahorroAcumulado + sobranteMes;
-        document.getElementById('total-txt').innerText = Math.floor(progresoActual).toLocaleString();
-        const faltante = metaFinal - progresoActual;
-        document.getElementById('faltante-txt').innerText = Math.max(0, Math.floor(faltante)).toLocaleString();
-        const pct = Math.round((progresoActual / metaFinal) * 100);
-        document.getElementById('fill').style.width = Math.min(Math.max(pct, 0), 100) + "%";
-        document.getElementById('pct-txt').innerText = pct + "% alcanzado";
-        dibujarGrafico();
-    }
-
-    function addGasto() {
-        const desc = document.getElementById('g-desc').value;
-        const monto = parseFloat(document.getElementById('g-monto').value);
-        const cat = document.getElementById('g-cat').value;
-        if (desc && !isNaN(monto)) {
-            gastosMes.push({ id: Date.now(), desc, monto, cat });
-            localStorage.setItem('alma_final_gastos', JSON.stringify(gastosMes));
-            document.getElementById('g-desc').value = ""; document.getElementById('g-monto').value = "";
-            dibujarLista(); actualizar();
-        }
-    }
-
-    function eliminarGasto(id) {
-        gastosMes = gastosMes.filter(g => g.id !== id);
-        localStorage.setItem('alma_final_gastos', JSON.stringify(gastosMes));
-        dibujarLista(); actualizar();
-    }
-
-    function dibujarLista() {
-        const listaDiv = document.getElementById('lista');
-        const divisa = localStorage.getItem('alma_final_divisa') || '$';
-        listaDiv.innerHTML = gastosMes.map(g => `
-            <div class="expense-item">
-                <span><b>${g.desc}</b></span>
-                <span>-${divisa}${g.monto} <button style="color:red; border:none; background:none; cursor:pointer" onclick="eliminarGasto(${g.id})">×</button></span>
+        <div class="card">
+            <h3>Registrar Movimiento</h3>
+            <p style="font-size: 0.8rem; color: #666;">Añade tus ingresos o gastos del día.</p>
+            <div class="form-group">
+                <input type="text" id="desc" placeholder="Descripción (ej. Venta, Cena...)">
+                <input type="number" id="monto" placeholder="Monto">
+                <select id="tipo">
+                    <option value="ingreso">🟢 Ingreso</option>
+                    <option value="gasto">🔴 Gasto</option>
+                </select>
             </div>
-        `).join('');
-    }
+            <button class="btn-add" style="width: 100%;" onclick="agregarMovimiento()">Guardar Registro</button>
+        </div>
 
-    function dibujarGrafico() {
-        const ctx = document.getElementById('miChart').getContext('2d');
-        if (chartInstance) chartInstance.destroy();
-        if (gastosMes.length === 0) return;
-        const resumen = {};
-        gastosMes.forEach(g => resumen[g.cat] = (resumen[g.cat] || 0) + g.monto);
-        chartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(resumen),
-                datasets: [{ data: Object.values(resumen), backgroundColor: ['#d4af37', '#2d5a27', '#3498db', '#e67e22', '#e74c3c'] }]
-            },
-            options: { plugins: { legend: { display: false } } }
-        });
-    }
+        <div class="card">
+            <h3>Resumen de Prosperidad</h3>
+            <div class="filter-bar">
+                <button class="btn-filter active" onclick="cambiarFiltro('semana', this)">Semana</button>
+                <button class="btn-filter" onclick="cambiarFiltro('quincena', this)">Quincena</button>
+                <button class="btn-filter" onclick="cambiarFiltro('mes', this)">Mes</button>
+                <button class="btn-filter" onclick="cambiarFiltro('año', this)">Año</button>
+            </div>
+            <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 20px;">
+                <div><small>Ingresos</small><div id="res-ingresos" style="color: var(--verde-claro); font-weight: bold; font-size: 1.2rem;">$0</div></div>
+                <div><small>Gastos</small><div id="res-gastos" style="color: var(--rojo); font-weight: bold; font-size: 1.2rem;">$0</div></div>
+                <div><small>Balance</small><div id="res-balance" style="font-weight: bold; font-size: 1.2rem;">$0</div></div>
+            </div>
+            <canvas id="chartMovimientos" style="max-height: 200px;"></canvas>
+        </div>
 
-    function cerrarMes() {
-        const ingreso = parseFloat(document.getElementById('in-ingreso-mes').value) || 0;
-        const totalG = gastosMes.reduce((s, g) => s + g.monto, 0);
-        ahorroAcumulado += (ingreso - totalG);
-        localStorage.setItem('alma_final_ahorro', ahorroAcumulado);
-        localStorage.removeItem('alma_final_gastos');
-        gastosMes = [];
-        location.reload();
-    }
+        <div class="card full-width">
+            <h3>Historial de Movimientos</h3>
+            <div id="listaMovimientos" class="list-container">
+                </div>
+            <button class="btn-add" style="background:#64748b; margin-top:15px;" onclick="descargarPDF()">Descargar Reporte PDF</button>
+        </div>
+    </div>
 
-    function descargarPDF() {
-        const element = document.getElementById('app-content');
-        const botones = document.querySelectorAll('button, .btn-wa, .btn-backup');
-        botones.forEach(b => b.style.visibility = 'hidden');
-        html2pdf().from(element).save('Mi_Progreso_Alma.pdf').then(() => {
-            botones.forEach(b => b.style.visibility = 'visible');
-        });
-    }
+    <script>
+        let movimientos = JSON.parse(localStorage.getItem('alma_movimientos')) || [];
+        let filtroActual = 'semana';
+        let miChart = null;
 
-    function exportarDatos() {
-        const datos = {
-            ahorro: localStorage.getItem('alma_final_ahorro'),
-            gastos: localStorage.getItem('alma_final_gastos'),
-            meta: localStorage.getItem('alma_final_meta'),
-            ingreso: localStorage.getItem('alma_final_ingreso'),
-            divisa: localStorage.getItem('alma_final_divisa')
-        };
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(datos));
-        const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", "mi_prosperidad.json");
-        document.body.appendChild(downloadAnchorNode);
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
-    }
+        function agregarMovimiento() {
+            const desc = document.getElementById('desc').value;
+            const monto = parseFloat(document.getElementById('monto').value);
+            const tipo = document.getElementById('tipo').value;
+            
+            if (desc && monto > 0) {
+                const nuevo = {
+                    id: Date.now(),
+                    desc,
+                    monto,
+                    tipo,
+                    fecha: new Date().toISOString()
+                };
+                movimientos.push(nuevo);
+                localStorage.setItem('alma_movimientos', JSON.stringify(movimientos));
+                document.getElementById('desc').value = '';
+                document.getElementById('monto').value = '';
+                actualizarTodo();
+            } else {
+                alert("Por favor completa los datos correctamente.");
+            }
+        }
 
-    function importarDatos(event) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const datos = JSON.parse(e.target.result);
-            localStorage.setItem('alma_final_ahorro', datos.ahorro);
-            localStorage.setItem('alma_final_gastos', datos.gastos);
-            localStorage.setItem('alma_final_meta', datos.meta);
-            localStorage.setItem('alma_final_ingreso', datos.ingreso);
-            localStorage.setItem('alma_final_divisa', datos.divisa);
-            alert("¡Prosperidad cargada con éxito!");
-            location.reload();
-        };
-        reader.readAsText(event.target.files[0]);
-    }
-</script>
+        function filtrarMovimientos() {
+            const ahora = new Date();
+            return movimientos.filter(m => {
+                const fechaM = new Date(m.fecha);
+                const difDias = (ahora - fechaM) / (1000 * 60 * 60 * 24);
+                if (filtroActual === 'semana') return difDias <= 7;
+                if (filtroActual === 'quincena') return difDias <= 15;
+                if (filtroActual === 'mes') return difDias <= 30;
+                if (filtroActual === 'año') return difDias <= 365;
+                return true;
+            });
+        }
+
+        function actualizarTodo() {
+            const filtrados = filtrarMovimientos();
+            const lista = document.getElementById('listaMovimientos');
+            let totalI = 0, totalG = 0;
+
+            lista.innerHTML = '';
+            filtrados.reverse().forEach(m => {
+                if (m.tipo === 'ingreso') totalI += m.monto;
+                else totalG += m.monto;
+
+                lista.innerHTML += `
+                    <div class="item ${m.tipo}">
+                        <span><strong>${m.desc}</strong> <br><small>${new Date(m.fecha).toLocaleDateString()}</small></span>
+                        <span style="color: ${m.tipo === 'ingreso' ? 'green' : 'red'}">
+                            ${m.tipo === 'ingreso' ? '+' : '-'}$${m.monto.toLocaleString()}
+                        </span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('res-ingresos').innerText = `$${totalI.toLocaleString()}`;
+            document.getElementById('res-gastos').innerText = `$${totalG.toLocaleString()}`;
+            const balance = totalI - totalG;
+            const resB = document.getElementById('res-balance');
+            resB.innerText = `$${balance.toLocaleString()}`;
+            resB.style.color = balance >= 0 ? 'var(--verde-claro)' : 'var(--rojo)';
+
+            actualizarGrafico(totalI, totalG);
+        }
+
+        function actualizarGrafico(i, g) {
+            const ctx = document.getElementById('chartMovimientos').getContext('2d');
+            if (miChart) miChart.destroy();
+            miChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Ingresos', 'Gastos'],
+                    datasets: [{
+                        data: [i, g],
+                        backgroundColor: ['#22c55e', '#ef4444'],
+                        borderRadius: 10
+                    }]
+                },
+                options: { plugins: { legend: { display: false } } }
+            });
+        }
+
+        function cambiarFiltro(tipo, btn) {
+            filtroActual = tipo;
+            document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            actualizarTodo();
+        }
+
+        function descargarPDF() {
+            const element = document.querySelector('.app-section');
+            html2pdf().from(element).save('Resumen_Finanzas_Alma.pdf');
+        }
+
+        window.onload = actualizarTodo;
+    </script>
 </body>
 </html>
-
-
-
